@@ -1,0 +1,77 @@
+<div class="form main-form register-form" data-ng-controller="VorkursRegController as reg" >
+    <div class="login-form__left">
+        <div data-ng-repeat="error in reg.registerError track by $index">
+            <div class="alert alert-danger animated fadeIn">{{error.msg}}</div>
+        </div>
+        <div class="alert alert-danger animated fadeIn" data-ng-show="reg.emailError">{{reg.emailError}}</div>
+        <form id="register_form" data-ng-submit="reg.register()">
+            <h2>Anmeldung zum Vorkurs</h2>
+
+            <div class="input-wrapper">
+                <input required id="name" type="text" name="name" placeholder="Vor- und Nachname"
+                       data-ng-model="reg.user.name">
+
+                <div class="error_message">Bitte geben Sie Ihren Namen ein #</div>
+                <span class="pic user"></span>
+            </div>
+
+            <div class="input-wrapper">
+                <div class="input-wrapper">
+                    <select required id="sex" ng-model="reg.user.sex" ng-options="key as value for (key , value) in reg
+                .sex">
+                        <option value="" disabled selected>Geschlecht</option>
+                    </select>
+                </div>
+                <div class="error_message">Bitte geben Sie Ihr Geschlecht an #</div>
+            </div>
+
+            <div class="input-wrapper">
+                <input required id="email_block" type="email" name="email" placeholder="Email Adresse"
+                       data-ng-model="reg.user.email">
+
+                <div class="error_message">Bitte geben Sie Ihre Email Adresse ein #</div>
+                <span class="pic email"></span>
+            </div>
+            <div class="input-wrapper">
+                <input required id="confirm_email_block" type="email" name="confirm_email"
+                       placeholder="Email Adresse wiederholen" ng-model="reg.user.emailConfirm">
+
+                <div class="error_message">Bitte geben Sie Ihre Email Adresse erneut ein #</div>
+                <span class="pic email"></span>
+            </div>
+
+            <div class="input-wrapper">
+                <select required id="kurs" ng-model="reg.user.kurs" ng-options="k.name for k in reg
+                .kurs">
+                    <option value="" disabled selected>Kurs</option>
+                </select>
+            </div>
+
+            <div class="input-wrapper">
+                <select required id="studiengang" ng-model="reg.user.studiengang" ng-options="s for s in reg
+                .studiengang">
+                    <option value="" disabled selected>Studiengang</option>
+                </select>
+            </div>
+
+            <div class="button_register">
+                <button type="submit" class="submit_button">Anmelden</button>
+                <p>Bereits angemeldet?</p>
+                <a mean-token="vorkurs anmeldung status" ui-sref='vorkurs anmeldung status'>Anmeldungsstatus</a>
+            </div>
+            <div class="woman_ninja_bottom">
+                <img src="/theme/assets/img/woman_ninja.png" alt="#">
+            </div>
+        </form>
+    </div>
+    <div class="login-form__center">
+        <p>Info</p>
+    </div>
+    <div class="row login-form__right ">
+        <h2>Informationen zum Kurs</h2>
+        <div class="social_wrap">
+            {{ reg.user.kurs.info }}
+        </div>
+    </div>
+</div>
+

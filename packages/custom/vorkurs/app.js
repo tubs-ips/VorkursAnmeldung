@@ -18,12 +18,19 @@ Vorkurs.register(function(app, auth, database) {
 
   //We are adding a link to the main menu for all authenticated users
   Vorkurs.menus.add({
-    title: 'vorkurs example page',
-    link: 'vorkurs example page',
-    roles: ['authenticated'],
+    title: 'Vorkurs Anmeldung',
+    link: 'vorkurs anmeldung',
+    roles: ['anonymous', 'authenticated'],
     menu: 'main'
   });
-  
+
+  Vorkurs.menus.add({
+    title: 'Anmeldungsstatus anfordern',
+    link: 'vorkurs anmeldung resend',
+    roles: ['anonymous', 'authenticated'],
+    menu: 'main'
+  });
+
   Vorkurs.aggregateAsset('css', 'vorkurs.css');
 
   /**
@@ -38,11 +45,11 @@ Vorkurs.register(function(app, auth, database) {
 
     // Another save settings example this time with no callback
     // This writes over the last settings.
-    Vorkurs.settings({
-        'anotherSettings': 'some value'
-    });
+  Vorkurs.settings({
+    'anotherSettings': 'some value'
+  });
 
-    // Get settings. Retrieves latest saved settigns
+   // Get settings. Retrieves latest saved settigns
     Vorkurs.settings(function(err, settings) {
         //you now have the settings object
     });

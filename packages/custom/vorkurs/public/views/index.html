@@ -1,27 +1,27 @@
 <div class="" data-ng-controller="VorkursController">
-  <h1>Example view from your new awesome package</h1>
-  <h2>Package: {{package.name}}</h2>
-  <ol>
-    <li>
-      <a href="/api/vorkurs/example/anyone" target="_self">Server route that anyone can access</a>
-    </li>
-    <li>
-      <a href="/api/vorkurs/example/auth" target="_self">Server route that requires authentication</a>
-    </li>
-    <li>
-      <a href="/api/vorkurs/example/admin" target="_self">Server route that requires admin user</a>
-    </li>
-    <li>
-      <a href="/api/vorkurs/example/render" target="_self">Raw Html rendering example from using swig</a>
-    </li>
-  </ol>
-  <h3><img src="/vorkurs/assets/img/logo.png" /></h3>
-  </br>
-  <p class="alert alert-info">You can find your package in /packages/vorkurs</p>
-  </br>
-  <p class="alert alert-warning">MEAN versions prior to 0.3.2 will be in /node_modules/vorkurs</p>
-  </br>
-  <h3><a href="http://learn.mean.io">Documentation</a></h3>
-  </br>
-</div>
+  <h1>Vorkurse der TU Braunschweig im {{ package.semester }}</h1>
 
+  Um den Einstieg in das Studium zuvereinfachen werden Vorkurse für die Informatik vor jedem Semester und für die
+  Mathemathik vor jedem Wintersemester angeboten. Die Teilnahme an einem der Vorkurse ist nicht Voraussetzung für ein
+  erfolgreiches Studium, aber erfahrungsgemäß fällt Studierenden, die die Vorkurse besucht haben, der Einstieg ins
+  Studium leichter. Interessent(inn)en melden sich bitte in der Zeit vom
+  <div align="center"> {{ package.anmeldungStart }} bis zum {{ package.anmeldungEnde }} </div>
+  auf dieser Seite unter dem Menüpunkt <a ui-sref='vorkurs anmeldung' uib-tooltip="Hier können Sie sich zu
+    einem Vorkurs anmelden">"Vorkurs Anmeldung"</a>
+  an.
+  Sollten
+  Sie ihre
+  Anmeldungs ändern oder
+    widerrufen
+  wollen, so können Sie dies mit dem Link in der Anmeldebestätigungs-Email tun. Falls Sie die Email gelöscht haben,
+  können Sie sich unter dem Menupunkt <a ui-sref='vorkurs anmeldung resend'
+                                         uib-tooltip="Zum Anfordern
+    des Status Ihrer Anmeldung">"Anmeldestatus anfordern"</a> eine neue Email zuschicken
+  lassen.
+  <br/><br/>
+  Bei Problemen senden Sie bitte eine Email an <a href="mailto:{{ package.email
+  }}?subject=Anmedung%20Vorkurs%20{{ package.semester.split(' ').join('%20') }}" tooltip="Email"> {{ package
+    .email
+  }} </a> und beschreiben Sie bitte das aufgetretene Problem.
+</div>
+r

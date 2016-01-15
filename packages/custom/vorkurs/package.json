@@ -10,6 +10,12 @@
     "node": "0.10.x",
     "npm": "1.4.x"
   },
-  "dependencies": {},
+  "scripts": {
+    "postinstall" : "bower install"
+  },
+  "dependencies": {
+    "urlsafe-base64": "latest",
+    "striptags": "latest"
+  },
   "license": "MIT"
 }
