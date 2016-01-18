@@ -2,6 +2,7 @@
   "name": "vorkurs",
   "version": "0.0.1",
   "dependencies": {
-    "angular-jwt" : "latest"
+    "angular-jwt" : "latest",
+    "ngDialog" : "latest"
   }
 }

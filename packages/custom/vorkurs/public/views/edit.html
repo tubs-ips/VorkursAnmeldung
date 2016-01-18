@@ -1,10 +1,13 @@
-<div class="form main-form register-form" data-ng-controller="VorkursStatusController as ctl">
+<div class="form main-form register-form" data-ng-controller="VorkursEditController as ctl">
     <div class="login-form__left">
         <div data-ng-repeat="error in ctl.userError track by $index">
             <div class="alert alert-danger animated fadeIn">{{ error.msg }}</div>
         </div>
-        <form id="register_form" data-ng-submit="ctl.goToEdit()">
-            <h2>Status Ihrer Anmeldung</h2>
+        <div data-ng-repeat="error in ctl.editError track by $index">
+            <div class="alert alert-danger animated fadeIn">{{ error.msg }}</div>
+        </div>
+        <form id="register_form" data-ng-submit="ctl.edit()">
+            <h2>Anmeldung editieren</h2>
 
             <div class="input-wrapper">
                 <input disabled id="name" type="text" name="name" placeholder="Vor- und Nachname"
@@ -31,8 +34,9 @@
             </div>
 
             <div class="input-wrapper">
-                <input disabled id="kurs" type="text" name="kurs" placeholder="Kurs"
-                       value="{{ ctl.user.kurs.name }}">
+                <select id="kurs" ng-model="ctl.user.kurs" ng-options="k.name for k in ctl
+                .kurs">
+                </select>
 
                 <div class="error_message">Bitte geben Sie einen Kurs an #</div>
             </div>
@@ -54,7 +58,7 @@
             </div>
 
             <div class="button_register">
-                <button type="submit" class="submit_button">Ändern</button>
+                <button type="submit" class="submit_button">Speichern</button>
             </div>
             <div class="woman_ninja_bottom">
                 <img src="/theme/assets/img/woman_ninja.png" alt="#">
@@ -68,9 +72,6 @@
         <h2>Informationen zum Kurs</h2>
         <div class="social_wrap">
             {{ ctl.user.kurs.info }}
-            <!--div ng-repeat="g in ctl.user.gruppen">
-                {{ g.info }}
-            </div-->
         </div>
     </div>
 </div>

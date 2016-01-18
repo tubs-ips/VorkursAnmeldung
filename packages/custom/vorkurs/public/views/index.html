@@ -1,27 +1,22 @@
 <div class="" data-ng-controller="VorkursController">
-  <h1>Vorkurse der TU Braunschweig im {{ package.semester }}</h1>
+    <h1>Vorkurse der TU Braunschweig im {{ package.semester }}</h1>
 
-  Um den Einstieg in das Studium zuvereinfachen werden Vorkurse für die Informatik vor jedem Semester und für die
-  Mathemathik vor jedem Wintersemester angeboten. Die Teilnahme an einem der Vorkurse ist nicht Voraussetzung für ein
-  erfolgreiches Studium, aber erfahrungsgemäß fällt Studierenden, die die Vorkurse besucht haben, der Einstieg ins
-  Studium leichter. Interessent(inn)en melden sich bitte in der Zeit vom
-  <div align="center"> {{ package.anmeldungStart }} bis zum {{ package.anmeldungEnde }} </div>
-  auf dieser Seite unter dem Menüpunkt <a ui-sref='vorkurs anmeldung' uib-tooltip="Hier können Sie sich zu
-    einem Vorkurs anmelden">"Vorkurs Anmeldung"</a>
-  an.
-  Sollten
-  Sie ihre
-  Anmeldungs ändern oder
-    widerrufen
-  wollen, so können Sie dies mit dem Link in der Anmeldebestätigungs-Email tun. Falls Sie die Email gelöscht haben,
-  können Sie sich unter dem Menupunkt <a ui-sref='vorkurs anmeldung resend'
-                                         uib-tooltip="Zum Anfordern
-    des Status Ihrer Anmeldung">"Anmeldestatus anfordern"</a> eine neue Email zuschicken
-  lassen.
-  <br/><br/>
-  Bei Problemen senden Sie bitte eine Email an <a href="mailto:{{ package.email
-  }}?subject=Anmedung%20Vorkurs%20{{ package.semester.split(' ').join('%20') }}" tooltip="Email"> {{ package
-    .email
-  }} </a> und beschreiben Sie bitte das aufgetretene Problem.
+    Um den Einstieg in das Studium zuvereinfachen werden Vorkurse für die Informatik vor jedem Semester und für die
+    Mathemathik vor jedem Wintersemester angeboten. Die Teilnahme an einem der Vorkurse ist nicht Voraussetzung für ein
+    erfolgreiches Studium, aber erfahrungsgemäß fällt Studierenden, die die Vorkurse besucht haben, der Einstieg ins
+    Studium leichter. Interessent(inn)en melden sich bitte bis zum
+    <div align="center"> {{ package.anmeldungEnde }} </div>
+    auf dieser Seite unter dem Menüpunkt <a ui-sref='vorkurs anmeldung' uib-tooltip="Hier können Sie sich zu
+    einem Vorkurs anmelden">Vorkurs Anmeldung</a>
+    an. Sollten Sie ihre Anmeldungs ändern oder widerrufen
+    wollen, so können Sie dies mit dem Link in der Anmeldebestätigungs-Email tun. Falls Sie die Email gelöscht haben,
+    können Sie sich unter dem Menupunkt <a ui-sref='vorkurs resend'
+                                           uib-tooltip="Zum Anfordern
+    des Status Ihrer Anmeldung">Anmeldestatus anfordern</a> eine neue Email zuschicken
+    lassen.
+    <br/><br/>
+    Bei Problemen senden Sie bitte eine Email an <a
+            href="mailto:{{ package.email }}?subject=Anmedung%20Vorkurs%20{{ package.semester.split(' ').join('%20') }}"
+            tooltip="Email"> {{ package
+        .email }} </a> und beschreiben Sie bitte das aufgetretene Problem.
 </div>
-r

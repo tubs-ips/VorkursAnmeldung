@@ -18,12 +18,12 @@ module.exports = {
 
         user.gruppen.forEach(function (value) {
             var gruppe = config.public.vorkursConfig.gruppen[value];
-            if (gruppe.hasOwnProperty("mail") && gruppe.mail !== '') {
+            if (gruppe.hasOwnProperty('mail') && gruppe.mail !== '') {
                 body.push(' ');
                 body.push(gruppe.mail);
             }
-            if (gruppe.hasOwnProperty("mailPDF") && gruppe.mailPDF !== '') {
-                if (!mailOptions.hasOwnProperty("attachments")) {
+            if (gruppe.hasOwnProperty('mailPDF') && gruppe.mailPDF !== '') {
+                if (!mailOptions.hasOwnProperty('attachments')) {
                     mailOptions.attachments = [];
                 }
                 mailOptions.attachments.push({
@@ -59,16 +59,16 @@ module.exports = {
         mailOptions.text = striptags(mailOptions.html, ['a']);
         return mailOptions;
     }/*,
-    forgot_password_email: function (user, req, token, mailOptions) {
-        mailOptions.html = [
-            'Hi ' + user.name + ',',
-            'We have received a request to reset the password for your account.',
-            'If you made this request, please click on the link below or paste this into your browser to complete the process:',
-            'http://' + req.headers.host + '/reset/' + token,
-            'This link will work for 1 hour or until your password is reset.',
-            'If you did not ask to change your password, please ignore this email and your account will remain unchanged.'
-        ].join('\n\n');
-        mailOptions.subject = 'Resetting the password';
-        return mailOptions;
-    }*/
+     forgot_password_email: function (user, req, token, mailOptions) {
+     mailOptions.html = [
+     'Hi ' + user.name + ',',
+     'We have received a request to reset the password for your account.',
+     'If you made this request, please click on the link below or paste this into your browser to complete the process:',
+     'http://' + req.headers.host + '/reset/' + token,
+     'This link will work for 1 hour or until your password is reset.',
+     'If you did not ask to change your password, please ignore this email and your account will remain unchanged.'
+     ].join('\n\n');
+     mailOptions.subject = 'Resetting the password';
+     return mailOptions;
+     }*/
 };

@@ -1,27 +1,50 @@
-<div class="" data-ng-controller="VorkursController">
-  <h1>Example view from your new awesome package</h1>
-  <h2>Package: {{package.name}}</h2>
-  <ol>
-    <li>
-      <a href="/api/vorkurs/example/anyone" target="_self">Server route that anyone can access</a>
-    </li>
-    <li>
-      <a href="/api/vorkurs/example/auth" target="_self">Server route that requires authentication</a>
-    </li>
-    <li>
-      <a href="/api/vorkurs/example/admin" target="_self">Server route that requires admin user</a>
-    </li>
-    <li>
-      <a href="/api/vorkurs/example/render" target="_self">Raw Html rendering example from using swig</a>
-    </li>
-  </ol>
-  <h3><img src="/vorkurs/assets/img/logo.png" /></h3>
-  </br>
-  <p class="alert alert-info">You can find your package in /packages/vorkurs</p>
-  </br>
-  <p class="alert alert-warning">MEAN versions prior to 0.3.2 will be in /node_modules/vorkurs</p>
-  </br>
-  <h3><a href="http://learn.mean.io">Documentation</a></h3>
-  </br>
+<div class="form main-form register-form" data-ng-controller="VorkursResendController as ctl">
+    <script type="text/ng-template" id="firstDialog">
+        <div class="ngdialog-message">
+            <h2>Email wurde versand</h2>
+        </div>
+    </script>
+    <div class="login-form__left">
+        <div data-ng-repeat="error in ctl.resendError track by $index">
+            <div class="alert alert-danger animated fadeIn">{{ error.msg }}</div>
+        </div>
+        <div class="alert alert-danger animated fadeIn" data-ng-show="ctl.emailError">{{ ctl.emailError }}</div>
+        <form id="register_form" data-ng-submit="ctl.resend()">
+            <h2>Status Anfordern</h2>
+
+            <div class="input-wrapper">
+                <input required id="email_block" type="email" name="email" placeholder="Email Adresse"
+                       data-ng-model="ctl.user.email">
+
+                <div class="error_message">Bitte geben Sie Ihre Email Adresse ein #</div>
+                <span class="pic email"></span>
+            </div>
+            <div class="input-wrapper">
+                <input required id="confirm_email_block" type="email" name="confirm_email"
+                       placeholder="Email Adresse wiederholen" ng-model="ctl.user.emailConfirm">
+
+                <div class="error_message">Bitte geben Sie Ihre Email Adresse erneut ein #</div>
+                <span class="pic email"></span>
+            </div>
+
+            <div class="button_register">
+                <button type="submit" class="submit_button">Anfordern</button>
+            </div>
+            <div class="woman_ninja_bottom">
+                <img src="/theme/assets/img/woman_ninja.png" alt="#">
+            </div>
+        </form>
+    </div>
+    <div class="login-form__center">
+        <p>Info</p>
+    </div>
+    <div class="row login-form__right ">
+        <h2>Informationen</h2>
+        <div class="social_wrap">
+            Bitte verwenden Sie die Email Adresse mit der Sie sich für einen Kurs registriert haben. Ihnen wird nur eine
+            Email zu gesandt, wenn die Email Adresse in der Datenbank gespeichert ist, sollten Sie also keine Email
+            erhalten, so registrieren Sie sich bitte erneut.
+        </div>
+    </div>
 </div>
 

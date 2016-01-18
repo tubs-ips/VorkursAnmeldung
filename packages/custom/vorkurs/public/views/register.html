@@ -1,9 +1,9 @@
-<div class="form main-form register-form" data-ng-controller="VorkursRegController as reg" >
+<div class="form main-form register-form" data-ng-controller="VorkursRegController as reg">
     <div class="login-form__left">
         <div data-ng-repeat="error in reg.registerError track by $index">
-            <div class="alert alert-danger animated fadeIn">{{error.msg}}</div>
+            <div class="alert alert-danger animated fadeIn">{{ error.msg }}</div>
         </div>
-        <div class="alert alert-danger animated fadeIn" data-ng-show="reg.emailError">{{reg.emailError}}</div>
+        <div class="alert alert-danger animated fadeIn" data-ng-show="reg.emailError">{{ reg.emailError }}</div>
         <form id="register_form" data-ng-submit="reg.register()">
             <h2>Anmeldung zum Vorkurs</h2>
 
@@ -56,8 +56,8 @@
 
             <div class="button_register">
                 <button type="submit" class="submit_button">Anmelden</button>
-                <p>Bereits angemeldet?</p>
-                <a mean-token="vorkurs anmeldung status" ui-sref='vorkurs anmeldung status'>Anmeldungsstatus</a>
+                <p>Bereits registriert?</p>
+                <a ui-sref='vorkurs resend'>Status anfordern</a>
             </div>
             <div class="woman_ninja_bottom">
                 <img src="/theme/assets/img/woman_ninja.png" alt="#">

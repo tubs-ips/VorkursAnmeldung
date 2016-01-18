@@ -27,15 +27,16 @@ module.exports = function(MeanUser, app, auth, database, passport) {
 
   if(config.strategies.local.enabled)
   {
-      // Setting up the users api
-      app.route('/api/register')
-        .post(users.create);
+      if (config.strategies.local.register.enabled) {
+          // Setting up the users api
+          app.route('/api/register')
+              .post(users.create);
+      }
+          app.route('/api/forgot-password')
+              .post(users.forgotpassword);
 
-      app.route('/api/forgot-password')
-        .post(users.forgotpassword);
-
-      app.route('/api/reset/:token')
-        .post(users.resetpassword);
+          app.route('/api/reset/:token')
+              .post(users.resetpassword);
 
       // Setting the local strategy route
       app.route('/api/login')

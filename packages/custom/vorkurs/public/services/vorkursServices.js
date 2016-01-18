@@ -1,115 +1,139 @@
 'use strict';
 
-angular.module('mean.vorkurs').factory('Vorkurs', ['$rootScope', '$http', '$location', '$stateParams', '$cookies', '$q', '$timeout',
-    function ($rootScope, $http, $location, $stateParams, $cookies, $q, $timeout) {
+angular.module('mean.vorkurs').factory('Vorkurs', ['$rootScope', '$http',
+    function ($rootScope, $http) {
 
         var self;
 
-        function escape(html) {
-            return String(html)
-                .replace(/&/g, '&amp;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#39;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;');
-        }
-
-        function b64_to_utf8(str) {
-            return decodeURIComponent(escape(window.atob(str)));
-        }
-
         function VorkursKlass() {
             this.token = '';
+            this.user = {};
             self = this;
         }
 
-        VorkursKlass.prototype.onIdentity = function (response) {
-            console.log(angular.toJson(response, true));
+        VorkursKlass.prototype.onRegisterFail = function (response) {
             this.loginError = {};
             this.registerError = {};
             this.validationError = {};
-            if (angular.isObject(response)) {
-                console.log(angular.toJson(response, true));
-
-                var encodedUserToken, userToken, destination;
-                if (angular.isDefined(response.token)) {
-                    localStorage.setItem('JWT', response.token);
-                    encodedUserToken = decodeURI(b64_to_utf8(response.token.split('.')[1]));
-                    userToken = JSON.parse(encodedUserToken);
-                }
-                destination = angular.isDefined(response.redirect) ? response.redirect : '/vorkurs/status';
-                $cookies.remove('redirect');
-
-                console.log(angular.toJson(destination, true));
-                console.log(angular.toJson(encodedUserToken, true));
-                console.log(angular.toJson(userToken, true));
-                console.log(destination + '/' + userToken.token);
-                $location.path(destination + '/' + userToken.token).replace();
+            if (angular.isObject(response) && response.hasOwnProperty('data') && angular.isArray(response.data)) {
+                this.registerError = response.data;
+                this.validationError = response.data.msg;
+                this.resetpassworderror = response.data.msg;
             } else {
-                this.registerError = [{msg: "Ups das hätte nicht passieren dürfen -- Server Error"}];
-            }
-        };
-
-        VorkursKlass.prototype.onIdFail = function (response) {
-            this.loginError = {};
-            this.registerError = {};
-            this.validationError = {};
-            console.log(angular.toJson(response));
-            if (angular.isArray(response)) {
-                $location.path(response.redirect);
-                this.registerError = response;
-                this.validationError = response.msg;
-                this.resetpassworderror = response.msg;
-            } else {
-                this.registerError = [{msg: "Ups das hätte nicht passieren dürfen -- Server Error"}];
+                this.registerError = [{msg: 'Ups das hätte nicht passieren dürfen -- Server Error'}];
             }
             $rootScope.$emit('registerfailed');
         };
 
+        VorkursKlass.prototype.onResendFail = function (response) {
+            this.resendError = {};
+            if (angular.isObject(response) && response.hasOwnProperty('data') && angular.isArray(response.data)) {
+                this.resendError = response.data;
+            } else {
+                this.resendError = [{msg: 'Ups das hätte nicht passieren dürfen -- Server Error'}];
+            }
+            $rootScope.$emit('resendfailed');
+        };
+
+        VorkursKlass.prototype.onUserFail = function (response) {
+            this.userError = {};
+            if (angular.isObject(response) && response.hasOwnProperty('data') && angular.isArray(response.data)) {
+                this.userError = response.data;
+            } else if (angular.isObject(response) && response.hasOwnProperty('data') && response.data === 'Forbidden') {
+                this.userError = [{msg: 'Unbekannter Benutzer'}];
+            } else {
+                this.userError = [{msg: 'Ups das hätte nicht passieren dürfen -- Server Error'}];
+            }
+            $rootScope.$emit('userfailed');
+        };
+
+        VorkursKlass.prototype.onUserFail1 = function (response) {
+            this.userError = {};
+            if (angular.isObject(response) && response.hasOwnProperty('data') && angular.isArray(response.data)) {
+                this.userError = response.data;
+            } else if (angular.isObject(response) && response.hasOwnProperty('data') && response.data === 'Forbidden') {
+                this.userError = [{msg: 'Unbekannter Benutzer'}];
+            } else {
+                this.userError = [{msg: 'Ups das hätte nicht passieren dürfen -- Server Error'}];
+            }
+            $rootScope.$emit('userfailed1');
+        };
+
+        VorkursKlass.prototype.onRegister = function (response) {
+            this.token = response.data.token;
+            $rootScope.$emit('registersuccess');
+        };
+
+
+        VorkursKlass.prototype.onUser = function (response) {
+            this.user = response.data;
+            $rootScope.$emit('usersuccess');
+        };
+
+        VorkursKlass.prototype.onUser1 = function (response) {
+            this.user = response.data;
+            $rootScope.$emit('usersuccess1');
+        };
+
+        VorkursKlass.prototype.onResend = function (response) {
+            $rootScope.$emit('resendsuccess');
+        };
+
+        VorkursKlass.prototype.onEdit = function (response) {
+            $rootScope.$emit('editsuccess');
+        };
+
+        VorkursKlass.prototype.onEditFail = function (response) {
+            this.editError = {};
+            if (angular.isObject(response) && response.hasOwnProperty('data') && angular.isArray(response.data)) {
+                this.editError = response.data;
+            } else {
+                this.editError = [{msg: 'Ups das hätte nicht passieren dürfen -- Server Error'}];
+            }
+            $rootScope.$emit('editfailed');
+        };
+
         var VorkursObj = new VorkursKlass();
 
-        /*VorkursKlass.prototype.login = function (user) {
-         // this is an ugly hack due to mean-admin needs
-         var destination = $location.path().indexOf('/login') === -1 ? $location.absUrl() : false;
-         $http.post('/api/login', {
-         email: user.email,
-         password: user.password,
-         redirect: $cookies.get('redirect') || destination
-         })
-         .success(this.onIdentity.bind(this))
-         .error(this.onIdFail.bind(this));
-         };*/
+        VorkursKlass.prototype.getUser = function (token) {
+            this.user = undefined;
+            $http.post('/api/vorkurs/user', {
+                token: token
+            }).then(this.onUser.bind(this), this.onUserFail.bind(this));
+        };
+
+        VorkursKlass.prototype.getUser1 = function (token) {
+            this.user = undefined;
+            $http.post('/api/vorkurs/user', {
+                token: token
+            }).then(this.onUser1.bind(this), this.onUserFail1.bind(this));
+        };
 
         VorkursKlass.prototype.register = function (user) {
-            $http.post('/api/vorkurs/anmelden/', {
-                    name: user.name,
-                    email: user.email,
-                    emailConfirm: user.emailConfirm,
-                    kurs: user.kurs.id,
-                    studiengang: user.studiengang,
-                    sex: user.sex
-                })
-                .success(this.onIdentity.bind(this))
-                .error(this.onIdFail.bind(this));
+            $http.post('/api/vorkurs/register', {
+                name: user.name,
+                email: user.email,
+                emailConfirm: user.emailConfirm,
+                kurs: user.kurs.id,
+                studiengang: user.studiengang,
+                sex: user.sex
+            }).then(this.onRegister.bind(this), this.onRegisterFail.bind(this));
         };
 
         VorkursKlass.prototype.edit = function (user) {
-            $http.post('/api/vorkurs/edit' + $stateParams.tokenId, {
-                    password: user.password,
-                    confirmPassword: user.confirmPassword
+            $http.post('/api/vorkurs/edit', {
+                    token: user.token,
+                    kurs: user.kurs.id
                 })
-                .success(this.onIdentity.bind(this))
-                .error(this.onIdFail.bind(this));
+                // ToDo
+                .then(this.onEdit.bind(this), this.onEditFail.bind(this));
         };
 
         VorkursKlass.prototype.resend = function (user) {
             $http.post('/api/vorkurs/resend', {
-                    text: user.email
-                })
-                .success(function (response) {
-                    $rootScope.$emit('forgotmailsent', response);
-                })
-                .error(this.onIdFail.bind(this));
+                email: user.email,
+                emailConfirm: user.emailConfirm
+            }).then(this.onResend.bind(this), this.onResendFail.bind(this));
         };
 
         return VorkursObj;
