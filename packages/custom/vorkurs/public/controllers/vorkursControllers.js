@@ -12,9 +12,8 @@ angular.module('mean.vorkurs', ['mean.system', 'ngDialog']) // 'ngDialog'
             $scope.package = conf;
         }
     ])
-    .controller('VorkursRegController', ['$rootScope', 'Vorkurs', '$meanConfig', '$location',
-        function ($rootScope, Vorkurs, $meanConfig, $location) {
-
+    .controller('VorkursRegController', ['$rootScope', '$scope', 'Vorkurs', '$meanConfig', '$location',
+        function ($rootScope, $scope, Vorkurs, $meanConfig, $location) {
             var vm = this;
 
             vm.sex = $meanConfig.vorkursConfig.sex;
@@ -32,18 +31,22 @@ angular.module('mean.vorkurs', ['mean.system', 'ngDialog']) // 'ngDialog'
                 Vorkurs.register(this.user);
             };
 
-            $rootScope.$on('registerfailed', function () {
-                vm.registerError = Vorkurs.registerError;
-            });
+            if ($rootScope.registerfailied === undefined) {
+                $rootScope.registerfailied = $rootScope.$on('registerfailed', function () {
+                    vm.registerError = Vorkurs.registerError;
+                });
+            }
 
-            $rootScope.$on('registersuccess', function () {
-                $location.path('/vorkurs/status/' + Vorkurs.token).replace();
-            });
+            if ($rootScope.registersuccess === undefined) {
+                $rootScope.registersuccess = $rootScope.$on('registersuccess', function () {
+                    $location.path('/vorkurs/status/' + Vorkurs.token).replace();
+                });
+            }
+
         }
     ])
-    .controller('VorkursResendController', ['$rootScope', 'Vorkurs', 'ngDialog',
-        function ($rootScope, Vorkurs, ngDialog) {
-
+    .controller('VorkursResendController', ['$rootScope', '$scope', 'Vorkurs', 'ngDialog',
+        function ($rootScope, $scope, Vorkurs, ngDialog) {
             var vm = this;
 
             vm.user = {};
@@ -53,20 +56,24 @@ angular.module('mean.vorkurs', ['mean.system', 'ngDialog']) // 'ngDialog'
                 Vorkurs.resend(this.user);
             };
 
-            $rootScope.$on('resendfailed', function () {
-                vm.resendError = Vorkurs.resendError;
-            });
-
-            $rootScope.$on('resendsuccess', function () {
-                ngDialog.open({
-                    template: 'firstDialog',
-                    className: 'ngdialog-theme-default ngdialog-theme-custom'
+            if ($rootScope.resendfailed == undefined) {
+                $rootScope.resendfailed = $rootScope.$on('resendfailed', function () {
+                    vm.resendError = Vorkurs.resendError;
                 });
-            });
+            }
+
+            if ($rootScope.resendsuccess === undefined) {
+                $rootScope.resendsuccess = $rootScope.$on('resendsuccess', function () {
+                    ngDialog.open({
+                        template: 'firstDialog',
+                        className: 'ngdialog-theme-default ngdialog-theme-custom'
+                    });
+                });
+            }
         }
     ])
-    .controller('VorkursStatusController', ['$rootScope', 'Vorkurs', '$meanConfig', '$stateParams', '$location',
-        function ($rootScope, Vorkurs, $meanConfig, $stateParams, $location) {
+    .controller('VorkursStatusController', ['$rootScope', '$scope', 'Vorkurs', '$meanConfig', '$stateParams', '$location',
+        function ($rootScope, $scope, Vorkurs, $meanConfig, $stateParams, $location) {
             var vm = this;
 
             vm.token = $stateParams.userToken;
@@ -91,23 +98,27 @@ angular.module('mean.vorkurs', ['mean.system', 'ngDialog']) // 'ngDialog'
                 $location.path('/vorkurs/edit/' + vm.token).replace();
             };
 
-            $rootScope.$on('usersuccess', function () {
-                vm.user.name = Vorkurs.user.name;
-                vm.user.email = Vorkurs.user.email;
-                vm.user.gruppen = Vorkurs.user.gruppen;
-                vm.user.token = Vorkurs.user.token;
-                vm.user.studiengang = Vorkurs.user.studiengang;
-                vm.user.sex = vm.sex[Vorkurs.user.sex];
-                vm.user.kurs = vm.kurs[Vorkurs.user.kurs];
-            });
+            if ($rootScope.usersuccess === undefined) {
+                $rootScope.usersuccess = $rootScope.$on('usersuccess', function () {
+                    vm.user.name = Vorkurs.user.name;
+                    vm.user.email = Vorkurs.user.email;
+                    vm.user.gruppen = Vorkurs.user.gruppen;
+                    vm.user.token = Vorkurs.user.token;
+                    vm.user.studiengang = Vorkurs.user.studiengang;
+                    vm.user.sex = vm.sex[Vorkurs.user.sex];
+                    vm.user.kurs = vm.kurs[Vorkurs.user.kurs];
+                });
+            }
 
-            $rootScope.$on('userfailed', function () {
-                vm.userError = Vorkurs.userError;
-            });
+            if ($rootScope.userfailed === undefined) {
+                $rootScope.userfailed = $rootScope.$on('userfailed', function () {
+                    vm.userError = Vorkurs.userError;
+                });
+            }
         }
     ])
-    .controller('VorkursEditController', ['$rootScope', 'Vorkurs', '$meanConfig', '$stateParams', '$location',
-        function ($rootScope, Vorkurs, $meanConfig, $stateParams, $location) {
+    .controller('VorkursEditController', ['$rootScope', '$scope', 'Vorkurs', '$meanConfig', '$stateParams', '$location',
+        function ($rootScope, $scope, Vorkurs, $meanConfig, $stateParams, $location) {
             var vm = this;
 
             vm.token = $stateParams.userToken;
@@ -132,27 +143,37 @@ angular.module('mean.vorkurs', ['mean.system', 'ngDialog']) // 'ngDialog'
                 Vorkurs.edit(vm.user);
             };
 
-            $rootScope.$on('editsuccess', function () {
-                $location.path('/vorkurs/status/' + vm.token).replace();
-            });
 
-            $rootScope.$on('editfailed', function () {
-                vm.editError = Vorkurs.editError;
-            });
 
-            $rootScope.$on('usersuccess1', function () {
-                vm.user.name = Vorkurs.user.name;
-                vm.user.email = Vorkurs.user.email;
-                vm.user.gruppen = Vorkurs.user.gruppen;
-                vm.user.token = Vorkurs.user.token;
-                vm.user.studiengang = Vorkurs.user.studiengang;
-                vm.user.sex = vm.sex[Vorkurs.user.sex];
-                vm.user.kurs = vm.kurs[Vorkurs.user.kurs];
-            });
+            if ($rootScope.editsuccess === undefined) {
+                $rootScope.editsuccess = $rootScope.$on('editsuccess', function () {
+                    $location.path('/vorkurs/status/' + vm.token).replace();
+                });
+            }
 
-            $rootScope.$on('userfailed1', function () {
-                vm.userError = Vorkurs.userError;
-            });
+            if ($rootScope.editfailed === undefined) {
+                $rootScope.editfailed = $rootScope.$on('editfailed', function () {
+                    vm.editError = Vorkurs.editError;
+                });
+            }
+
+            if ($rootScope.usersuccess1 === undefined) {
+                $rootScope.usersuccess1 = $rootScope.$on('usersuccess1', function () {
+                    vm.user.name = Vorkurs.user.name;
+                    vm.user.email = Vorkurs.user.email;
+                    vm.user.gruppen = Vorkurs.user.gruppen;
+                    vm.user.token = Vorkurs.user.token;
+                    vm.user.studiengang = Vorkurs.user.studiengang;
+                    vm.user.sex = vm.sex[Vorkurs.user.sex];
+                    vm.user.kurs = vm.kurs[Vorkurs.user.kurs];
+                });
+            }
+
+            if ($rootScope.userfailed1 === undefined) {
+                $rootScope.userfailed1 = $rootScope.$on('userfailed1', function () {
+                    vm.userError = Vorkurs.userError;
+                });
+            }
         }
     ])
     .config(['$viewPathProvider', function ($viewPathProvider) {

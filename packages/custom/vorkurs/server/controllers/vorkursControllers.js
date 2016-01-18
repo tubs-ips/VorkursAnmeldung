@@ -129,7 +129,7 @@ module.exports = function (Vorkurs) {
             }
 
             User.findOne({
-                mail: req.body.mail
+                email: req.body.email
             }, function (err, user) {
                 if (err || !user) {
                     return res.sendStatus(200);

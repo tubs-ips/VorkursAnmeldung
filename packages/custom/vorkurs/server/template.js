@@ -35,11 +35,11 @@ module.exports = {
 
         body.push(' ');
 
-        body.push('Mit freundlichem Gruß');
-        body.push('Die HiWis des IPS');
+        body.push('Mit freundlichem Gruß,');
+        body.push('die HiWis des IPS');
 
         mailOptions.html = body.join('<br>\n');
-        mailOptions.subject = 'Technische Universität Braunschweig - Anmeldung zum Kurs: ' + kurs.name;
+        mailOptions.subject = 'Technische Universität Braunschweig - Anmeldung: ' + kurs.name;
         mailOptions.text = striptags(mailOptions.html, ['a']);
         return mailOptions;
     },
@@ -50,8 +50,8 @@ module.exports = {
             'mit dieser Email erhalten Sie den Link mit der Sie Ihre Registrierung bearbeiten können:.',
             '<a href="http://' + req.headers.host + '/vorkurs/status/' + token + '">' + 'http://' + req.headers.host + '/vorkurs/status/' + token + '</a>.',
             '',
-            'Mit freundlichem Gruß',
-            'Die HiWis des IPS'
+            'Mit freundlichem Gruß,',
+            'die HiWis des IPS'
         ];
 
         mailOptions.html = body.join('<br>\n');
